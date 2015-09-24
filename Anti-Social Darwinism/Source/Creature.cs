@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace Anti_Social_Darwinism.Source
@@ -8,6 +9,11 @@ namespace Anti_Social_Darwinism.Source
     class Creature
     {
         Texture2D texture;
+        public Texture2D Texture
+        {
+            get { return texture; }
+            set { texture = value; }
+        }
 
         Vector2 position;
         public Vector2 Position
@@ -35,6 +41,20 @@ namespace Anti_Social_Darwinism.Source
         {
             get { return isMoving; }
             set { isMoving = value; }
+        }
+
+        float speed;
+        public float Speed
+        {
+            get { return speed; }
+            set { speed = value; }
+        }
+
+        Vector2 destination;
+        public Vector2 Destination
+        {
+            get { return destination; }
+            set { destination = value; }
         }
 
         private static ContentManager content;
@@ -103,7 +123,7 @@ namespace Anti_Social_Darwinism.Source
 
                 if (creature.IsMoving == true)
                 {
-                    creatureMovement.moveCreature(creature, Cursor.mousePosition);
+                    creatureMovement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
                 }
             }
         }
@@ -117,12 +137,28 @@ namespace Anti_Social_Darwinism.Source
 
     class CreatureMovement
     {
-        public void moveCreature(Creature creature, Vector2 position)
+        public void moveCreature(Creature creature, float speed, Vector2 position)
         {
-            Vector2 tempPosition = creature.Position;
-            tempPosition.X = position.X;
-            tempPosition.Y = position.Y;
-            creature.Position = tempPosition;
+            creature.Destination = position;
+            creature.Speed = .5f;
+
+            if (creature.Position.X != (creature.Destination.X - (creature.Texture.Width / 2)) || creature.Position.Y != (creature.Destination.Y - (creature.Texture.Height / 2)))
+            {
+                Vector2 tempPosition = creature.Position;
+
+                if (creature.Position.X < creature.Destination.X - (creature.Texture.Width / 2))
+                    tempPosition.X += speed;
+                if (creature.Position.X > creature.Destination.X - (creature.Texture.Width / 2))
+                    tempPosition.X -= speed;
+                if (creature.Position.Y < creature.Destination.Y - (creature.Texture.Height / 2))
+                    tempPosition.Y += speed;
+                if (creature.Position.Y > creature.Destination.Y - (creature.Texture.Height / 2))
+                    tempPosition.Y -= speed;
+
+                creature.Position = tempPosition;
+            }
+            else
+                creature.IsMoving = false;
         }
     }
 }
