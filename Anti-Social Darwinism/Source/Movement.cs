@@ -4,6 +4,13 @@ namespace Anti_Social_Darwinism.Source
 {
     class Movement
     {
+        public void resetMovement(Creature creature)
+        {
+            creature.Destination = new Vector2(0, 0);
+            creature.Speed = 0f;
+            creature.IsMoving = false;
+        }
+
         public void moveCreature(Creature creature, float speed, Vector2 position)
         {
             if (creature.Destination == null || creature.Destination == new Vector2(0, 0))

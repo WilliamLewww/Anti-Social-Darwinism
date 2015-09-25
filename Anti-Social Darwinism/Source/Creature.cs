@@ -94,6 +94,8 @@ namespace Anti_Social_Darwinism.Source
 
     class CreatureList
     {
+        bool rightClickDown;
+
         Movement movement = new Movement();
 
         public static List<Creature> creatureList = new List<Creature>();
@@ -109,6 +111,12 @@ namespace Anti_Social_Darwinism.Source
         public void Update(GameTime gameTime)
         {
             int parentCounter = 0;
+
+            if (Cursor.ReturnMouseStateRight == true)
+            {
+                rightClickDown = true;
+            }
+
             foreach (Creature creature in creatureList)
             {
                 if (creature.Selected == true)
@@ -116,8 +124,11 @@ namespace Anti_Social_Darwinism.Source
                     DebugTools.followParent(parentCounter, creature.Rectangle, 5);
                     parentCounter += 1;
 
-                    if (Cursor.ReturnMouseStateRight == true)
+                    if (rightClickDown == true && Cursor.ReturnMouseStateRight == false)
+                    {
+                        movement.resetMovement(creature);
                         creature.IsMoving = true;
+                    }
                         
                 }
 
@@ -125,6 +136,11 @@ namespace Anti_Social_Darwinism.Source
                 {
                     movement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
                 }
+            }
+
+            if (Cursor.ReturnMouseStateRight == false)
+            {
+                rightClickDown = false;
             }
         }
 
