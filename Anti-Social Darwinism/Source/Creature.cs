@@ -139,8 +139,11 @@ namespace Anti_Social_Darwinism.Source
     {
         public void moveCreature(Creature creature, float speed, Vector2 position)
         {
-            creature.Destination = position;
-            creature.Speed = .5f;
+            if (creature.Destination == null || creature.Destination == new Vector2(0, 0))
+            {
+                creature.Destination = position;
+                creature.Speed = .5f;
+            }
 
             if (creature.Position.X != (creature.Destination.X - (creature.Texture.Width / 2)) || creature.Position.Y != (creature.Destination.Y - (creature.Texture.Height / 2)))
             {
@@ -158,7 +161,11 @@ namespace Anti_Social_Darwinism.Source
                 creature.Position = tempPosition;
             }
             else
+            {
+                creature.Destination = new Vector2(0, 0);
+                creature.Speed = 0f;
                 creature.IsMoving = false;
+            }
         }
     }
 }
