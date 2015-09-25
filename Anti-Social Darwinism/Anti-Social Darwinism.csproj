@@ -47,6 +47,7 @@
     <Compile Include="Source\DebugTools.cs" />
     <Compile Include="Source\EnvironmentGenerator.cs" />
     <Compile Include="Source\Main.cs" />
+    <Compile Include="Source\Movement.cs" />
     <Compile Include="Source\TileMap.cs" />
   </ItemGroup>
   <ItemGroup>

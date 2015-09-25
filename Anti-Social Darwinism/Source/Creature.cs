@@ -94,7 +94,7 @@ namespace Anti_Social_Darwinism.Source
 
     class CreatureList
     {
-        CreatureMovement creatureMovement = new CreatureMovement();
+        Movement movement = new Movement();
 
         public static List<Creature> creatureList = new List<Creature>();
 
@@ -123,7 +123,7 @@ namespace Anti_Social_Darwinism.Source
 
                 if (creature.IsMoving == true)
                 {
-                    creatureMovement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
+                    movement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
                 }
             }
         }
@@ -132,40 +132,6 @@ namespace Anti_Social_Darwinism.Source
         {
             foreach (Creature creature in creatureList)
                 creature.Draw(spriteBatch);
-        }
-    }
-
-    class CreatureMovement
-    {
-        public void moveCreature(Creature creature, float speed, Vector2 position)
-        {
-            if (creature.Destination == null || creature.Destination == new Vector2(0, 0))
-            {
-                creature.Destination = position;
-                creature.Speed = .5f;
-            }
-
-            if (creature.Position.X != (creature.Destination.X - (creature.Texture.Width / 2)) || creature.Position.Y != (creature.Destination.Y - (creature.Texture.Height / 2)))
-            {
-                Vector2 tempPosition = creature.Position;
-
-                if (creature.Position.X < creature.Destination.X - (creature.Texture.Width / 2))
-                    tempPosition.X += speed;
-                if (creature.Position.X > creature.Destination.X - (creature.Texture.Width / 2))
-                    tempPosition.X -= speed;
-                if (creature.Position.Y < creature.Destination.Y - (creature.Texture.Height / 2))
-                    tempPosition.Y += speed;
-                if (creature.Position.Y > creature.Destination.Y - (creature.Texture.Height / 2))
-                    tempPosition.Y -= speed;
-
-                creature.Position = tempPosition;
-            }
-            else
-            {
-                creature.Destination = new Vector2(0, 0);
-                creature.Speed = 0f;
-                creature.IsMoving = false;
-            }
         }
     }
 }
