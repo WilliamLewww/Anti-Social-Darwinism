@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Anti_Social_Darwinism.Source
@@ -99,6 +98,7 @@ namespace Anti_Social_Darwinism.Source
         Movement movement = new Movement();
 
         public static List<Creature> creatureList = new List<Creature>();
+        public static List<Creature> selectedCreatureList = new List<Creature>();
 
         public void LoadContent(ContentManager content)
         {
@@ -110,38 +110,36 @@ namespace Anti_Social_Darwinism.Source
 
         public void Update(GameTime gameTime)
         {
-            int parentCounter = 0;
-
             if (Cursor.ReturnMouseStateRight == true)
-            {
                 rightClickDown = true;
-            }
 
             foreach (Creature creature in creatureList)
             {
                 if (creature.Selected == true)
-                {
-                    DebugTools.followParent(parentCounter, creature.Rectangle, 5);
-                    parentCounter += 1;
-
-                    if (rightClickDown == true && Cursor.ReturnMouseStateRight == false)
-                    {
-                        movement.resetMovement(creature);
-                        creature.IsMoving = true;
-                    }
-                        
-                }
+                    if (!selectedCreatureList.Contains(creature))
+                        selectedCreatureList.Add(creature);
 
                 if (creature.IsMoving == true)
-                {
                     movement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
+            }
+
+
+            int parentCounter = 0;
+
+            foreach (Creature creature in selectedCreatureList)
+            {
+                DebugTools.followParent(parentCounter, creature.Rectangle, 5);
+                parentCounter += 1;
+
+                if (rightClickDown == true && Cursor.ReturnMouseStateRight == false)
+                {
+                    movement.resetMovement(creature);
+                    creature.IsMoving = true;
                 }
             }
 
             if (Cursor.ReturnMouseStateRight == false)
-            {
                 rightClickDown = false;
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
