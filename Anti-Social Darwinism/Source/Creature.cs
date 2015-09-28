@@ -105,7 +105,12 @@ namespace Anti_Social_Darwinism.Source
             Creature.Content = content;
 
             for (int x = 0; x < 10; x++)
-                creatureList.Add(new Creature(0, x * 50 + 25, 75));
+            {
+                for (int y = 0; y < 10; y++)
+                {
+                    creatureList.Add(new Creature(0, x * 50 + 25, y * 50 + 25));
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
