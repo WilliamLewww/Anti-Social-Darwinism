@@ -16,7 +16,7 @@ namespace Anti_Social_Darwinism.Source
             if (creature.Destination == null || creature.Destination == new Vector2(0, 0))
             {
                 creature.Destination = position;
-                creature.Speed = 1f;
+                creature.Speed = 3f;
             }
 
             foreach (Creature creatureObject in CreatureList.creatureList)
@@ -30,13 +30,28 @@ namespace Anti_Social_Darwinism.Source
                 Vector2 tempPosition = creature.Position;
 
                 if (creature.Position.X < creature.Destination.X - (creature.Texture.Width / 2))
-                    tempPosition.X += speed;
+                    if (creature.Position.X + speed > creature.Destination.X - (creature.Texture.Width / 2))
+                        tempPosition.X += 1;
+                    else
+                        tempPosition.X += speed;
+
                 if (creature.Position.X > creature.Destination.X - (creature.Texture.Width / 2))
-                    tempPosition.X -= speed;
+                    if (creature.Position.X + speed < creature.Destination.X - (creature.Texture.Width / 2))
+                        tempPosition.X -= 1;
+                    else
+                        tempPosition.X -= speed;
+
                 if (creature.Position.Y < creature.Destination.Y - (creature.Texture.Height / 2))
-                    tempPosition.Y += speed;
+                    if (creature.Position.Y + speed > creature.Destination.Y - (creature.Texture.Height / 2))
+                        tempPosition.Y += 1;
+                    else
+                        tempPosition.Y += speed;
+
                 if (creature.Position.Y > creature.Destination.Y - (creature.Texture.Height / 2))
-                    tempPosition.Y -= speed;
+                    if (creature.Position.Y + speed < creature.Destination.Y - (creature.Texture.Height / 2))
+                        tempPosition.Y -= 1;
+                    else
+                        tempPosition.Y -= speed;
 
                 creature.Position = tempPosition;
             }
