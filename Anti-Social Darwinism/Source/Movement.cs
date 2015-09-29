@@ -16,7 +16,7 @@ namespace Anti_Social_Darwinism.Source
             if (creature.Destination == null || creature.Destination == new Vector2(0, 0))
             {
                 creature.Destination = position;
-                creature.Speed = .3f;
+                creature.Speed = 1f;
             }
 
             foreach (Creature creatureObject in CreatureList.creatureList)

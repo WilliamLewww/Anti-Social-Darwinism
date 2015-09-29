@@ -33,10 +33,9 @@ namespace Anti_Social_Darwinism.Source
         public void Update(GameTime gameTime)
         {
             foreach (Creature creature in CreatureList.creatureList)
-            {
                 creature.Update(gameTime);
-                creatureList.Update(gameTime);
-            }
+
+            creatureList.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
