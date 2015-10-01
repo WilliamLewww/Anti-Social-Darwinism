@@ -43,11 +43,18 @@ namespace Anti_Social_Darwinism.Source
             set { isMoving = value; }
         }
 
-        float speed;
-        public float Speed
+        float velocityX;
+        public float VelocityX
         {
-            get { return speed; }
-            set { speed = value; }
+            get { return velocityX; }
+            set { velocityX = value; }
+        }
+
+        float velocityY;
+        public float VelocityY
+        {
+            get { return velocityY; }
+            set { velocityY = value; }
         }
 
         Vector2 destination;
@@ -123,6 +130,12 @@ namespace Anti_Social_Darwinism.Source
 
                 if (creature.IsMoving == true)
                     movement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
+
+                foreach (Creature creatureObject in CreatureList.creatureList)
+                {
+                    if (creature != creatureObject)
+                        movement.creatureCollision(creature, creatureObject);
+                }
             }
 
 
