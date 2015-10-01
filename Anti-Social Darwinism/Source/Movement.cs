@@ -7,16 +7,16 @@ namespace Anti_Social_Darwinism.Source
         public void resetMovement(Creature creature)
         {
             creature.Destination = new Vector2(0, 0);
-            creature.Speed = 0f;
+            creature.VelocityX = 0f;
+            creature.VelocityY = 0f;
             creature.IsMoving = false;
         }
 
-        public void moveCreature(Creature creature, float speed, Vector2 position)
+        public void moveCreature(Creature creature, Vector2 position)
         {
             if (creature.Destination == null || creature.Destination == new Vector2(0, 0))
             {
                 creature.Destination = position;
-                creature.Speed = 3f;
             }
 
             /*
@@ -32,35 +32,52 @@ namespace Anti_Social_Darwinism.Source
                 Vector2 tempPosition = creature.Position;
 
                 if (creature.Position.X < creature.Destination.X - (creature.Texture.Width / 2))
-                    if (creature.Position.X + speed > creature.Destination.X - (creature.Texture.Width / 2))
-                        tempPosition.X += 1;
-                    else
-                        tempPosition.X += speed;
+                {
+                    creature.VelocityX = 3;
+
+                    if (creature.Position.X + creature.VelocityX > creature.Destination.X - (creature.Texture.Width / 2))
+                        creature.VelocityX = 1;
+
+                    tempPosition.X += creature.VelocityX;
+                }
 
                 if (creature.Position.X > creature.Destination.X - (creature.Texture.Width / 2))
-                    if (creature.Position.X + speed < creature.Destination.X - (creature.Texture.Width / 2))
-                        tempPosition.X -= 1;
-                    else
-                        tempPosition.X -= speed;
+                {
+                    creature.VelocityX = -3;
+
+                    if (creature.Position.X + creature.VelocityX < creature.Destination.X - (creature.Texture.Width / 2))
+                        creature.VelocityX = -1;
+
+                    tempPosition.X += creature.VelocityX;
+                }
 
                 if (creature.Position.Y < creature.Destination.Y - (creature.Texture.Height / 2))
-                    if (creature.Position.Y + speed > creature.Destination.Y - (creature.Texture.Height / 2))
-                        tempPosition.Y += 1;
-                    else
-                        tempPosition.Y += speed;
+                {
+                    creature.VelocityY = 3;
+
+                    if (creature.Position.Y + creature.VelocityY > creature.Destination.Y - (creature.Texture.Height / 2))
+                        creature.VelocityY = 1;
+
+                    tempPosition.Y += creature.VelocityY;
+                }
 
                 if (creature.Position.Y > creature.Destination.Y - (creature.Texture.Height / 2))
-                    if (creature.Position.Y + speed < creature.Destination.Y - (creature.Texture.Height / 2))
-                        tempPosition.Y -= 1;
-                    else
-                        tempPosition.Y -= speed;
+                {
+                    creature.VelocityY = -3;
+
+                    if (creature.Position.Y + creature.VelocityY < creature.Destination.Y - (creature.Texture.Height / 2))
+                        creature.VelocityY = -1;
+
+                    tempPosition.Y += creature.VelocityY;
+                }
 
                 creature.Position = tempPosition;
             }
             else
             {
                 creature.Destination = new Vector2(0, 0);
-                creature.Speed = 0f;
+                creature.VelocityX = 0f;
+                creature.VelocityY = 0f;
                 creature.IsMoving = false;
             }
         }
@@ -73,20 +90,20 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
-                if (creatureA.Speed > creatureB.Speed)
+                if (creatureA.VelocityY > creatureB.VelocityY)
                 {
-                    creatureB.Speed = creatureA.Speed;
+                    creatureB.VelocityY = creatureA.VelocityY;
 
                     Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
+                    float tempSpeed = creatureA.VelocityY;
                     tempPosition.Y += tempSpeed;
                     creatureB.Position = tempPosition;
                 }
 
-                if (creatureA.Speed == creatureB.Speed)
+                if (creatureA.VelocityY == creatureB.VelocityY)
                 {
                     Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
+                    float tempSpeed = creatureA.VelocityY;
                     tempPosition.Y += tempSpeed;
                     creatureB.Position = tempPosition;
                 }
@@ -98,23 +115,7 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
-                if (creatureA.Speed > creatureB.Speed)
-                {
-                    creatureB.Speed = creatureA.Speed;
 
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.Y -= tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
-
-                if (creatureA.Speed == creatureB.Speed)
-                {
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.Y -= tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
             }
 
             //left
@@ -123,23 +124,7 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 3) &&
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 3))
             {
-                if (creatureA.Speed > creatureB.Speed)
-                {
-                    creatureB.Speed = creatureA.Speed;
 
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.X += tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
-
-                if (creatureA.Speed == creatureB.Speed)
-                {
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.X += tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
             }
 
             //right
@@ -148,23 +133,7 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 3) &&
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 3))
             {
-                if (creatureA.Speed > creatureB.Speed)
-                {
-                    creatureB.Speed = creatureA.Speed;
 
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.X -= tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
-
-                if (creatureA.Speed == creatureB.Speed)
-                {
-                    Vector2 tempPosition = creatureB.Position;
-                    float tempSpeed = creatureA.Speed;
-                    tempPosition.X -= tempSpeed;
-                    creatureB.Position = tempPosition;
-                }
             }
         }
     }

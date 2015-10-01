@@ -129,7 +129,7 @@ namespace Anti_Social_Darwinism.Source
                         selectedCreatureList.Add(creature);
 
                 if (creature.IsMoving == true)
-                    movement.moveCreature(creature, creature.Speed, Cursor.mousePosition);
+                    movement.moveCreature(creature, Cursor.mousePosition);
 
                 foreach (Creature creatureObject in CreatureList.creatureList)
                 {
