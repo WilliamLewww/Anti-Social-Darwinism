@@ -43,15 +43,15 @@ namespace Anti_Social_Darwinism.Source
             set { isMoving = value; }
         }
 
-        float velocityX;
-        public float VelocityX
+        Dictionary<string, float> velocityX = new Dictionary<string, float>();
+        public Dictionary<string, float> VelocityX
         {
             get { return velocityX; }
             set { velocityX = value; }
         }
 
-        float velocityY;
-        public float VelocityY
+        Dictionary<string, float> velocityY = new Dictionary<string, float>();
+        public Dictionary<string, float> VelocityY
         {
             get { return velocityY; }
             set { velocityY = value; }
@@ -81,6 +81,12 @@ namespace Anti_Social_Darwinism.Source
 
         public void Update(GameTime gameTime)
         {
+            foreach (KeyValuePair<string, float> dictionary in velocityX)
+                position.X += dictionary.Value;
+
+            foreach (KeyValuePair<string, float> dictionary in velocityY)
+                position.Y += dictionary.Value;
+
             rectangle = new Rectangle((int)(position.X), (int)(position.Y), texture.Width, texture.Height);
 
             if (Cursor.ReturnMouseState == true)
