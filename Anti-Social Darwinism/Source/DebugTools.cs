@@ -16,6 +16,7 @@ namespace Anti_Social_Darwinism.Source
         public static int listCounter = 0;
         static List<Texture2D> textureList = new List<Texture2D>();
         public static List<Rectangle> rectangleList = new List<Rectangle>();
+
         public static void createRectangle(Rectangle rectangle)
         {
             rectangleList.Add(rectangle);

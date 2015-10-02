@@ -50,11 +50,37 @@ namespace Anti_Social_Darwinism.Source
             set { velocityX = value; }
         }
 
+        public float NetVelocityX
+        {
+            get
+            {
+                float netVelocity = 0;
+
+                foreach (KeyValuePair<string, float> dictionary in velocityX)
+                    netVelocity += dictionary.Value;
+
+                return netVelocity;
+            }
+        }
+
         Dictionary<string, float> velocityY = new Dictionary<string, float>();
         public Dictionary<string, float> VelocityY
         {
             get { return velocityY; }
             set { velocityY = value; }
+        }
+
+        public float NetVelocityY
+        {
+            get
+            {
+                float netVelocity = 0;
+
+                foreach (KeyValuePair<string, float> dictionary in velocityY)
+                    netVelocity += dictionary.Value;
+
+                return netVelocity;
+            }
         }
 
         Vector2 destination;
@@ -90,6 +116,7 @@ namespace Anti_Social_Darwinism.Source
             rectangle = new Rectangle((int)(position.X), (int)(position.Y), texture.Width, texture.Height);
 
             if (Cursor.ReturnMouseState == true)
+            {
                 if (Cursor.ReturnRectangle.Intersects(Rectangle))
                 {
                     if (Selected == false)
@@ -97,6 +124,11 @@ namespace Anti_Social_Darwinism.Source
 
                     Selected = true;
                 }
+                else
+                {
+                    Selected = false;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -112,7 +144,9 @@ namespace Anti_Social_Darwinism.Source
         Movement movement = new Movement();
 
         public static List<Creature> creatureList = new List<Creature>();
+
         public static List<Creature> selectedCreatureList = new List<Creature>();
+        private static List<Creature> tempSelectedCreatureList = new List<Creature>();
 
         public void LoadContent(ContentManager content)
         {
@@ -137,7 +171,7 @@ namespace Anti_Social_Darwinism.Source
                 if (creature.IsMoving == true)
                     movement.moveCreature(creature, Cursor.mousePosition);
 
-                foreach (Creature creatureObject in CreatureList.creatureList)
+                foreach (Creature creatureObject in creatureList)
                 {
                     if (creature != creatureObject)
                         movement.creatureCollision(creature, creatureObject);
@@ -149,6 +183,9 @@ namespace Anti_Social_Darwinism.Source
 
             foreach (Creature creature in selectedCreatureList)
             {
+                if (creature.Selected == false)
+                    tempSelectedCreatureList.Add(creature);
+
                 DebugTools.followParent(parentCounter, creature.Rectangle, 5);
                 parentCounter += 1;
 
@@ -158,6 +195,10 @@ namespace Anti_Social_Darwinism.Source
                     creature.IsMoving = true;
                 }
             }
+
+            foreach (Creature creature in tempSelectedCreatureList)
+                selectedCreatureList.Remove(creature);
+            tempSelectedCreatureList.Clear();
 
             if (Cursor.ReturnMouseStateRight == false)
                 rightClickDown = false;
