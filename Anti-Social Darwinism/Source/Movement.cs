@@ -81,7 +81,9 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
-
+                if (creatureA.NetVelocityY > creatureB.NetVelocityY)
+                    if (!creatureB.VelocityY.ContainsKey("collision"))
+                        creatureB.VelocityY.Add("collision", creatureA.NetVelocityY);
             }
 
             //bottom
@@ -90,7 +92,9 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
-
+                if (creatureA.NetVelocityY < creatureB.NetVelocityY)
+                    if (!creatureB.VelocityY.ContainsKey("collision"))
+                        creatureB.VelocityY.Add("collision", creatureA.NetVelocityY);
             }
 
             //left
@@ -99,7 +103,9 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
             {
-
+                if (creatureA.NetVelocityX > creatureB.NetVelocityX)
+                    if (!creatureB.VelocityX.ContainsKey("collision"))
+                        creatureB.VelocityX.Add("collision", creatureA.NetVelocityX);
             }
 
             //right
@@ -108,7 +114,9 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
             {
-
+                if (creatureA.NetVelocityX < creatureB.NetVelocityX)
+                    if (!creatureB.VelocityX.ContainsKey("collision"))
+                        creatureB.VelocityX.Add("collision", creatureA.NetVelocityX);
             }
         }
     }
