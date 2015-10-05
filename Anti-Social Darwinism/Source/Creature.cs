@@ -1,18 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Anti_Social_Darwinism.Source
 {
     class Creature
     {
+        public static int creatureCount;
+
         Texture2D texture;
         public Texture2D Texture
         {
             get { return texture; }
             set { texture = value; }
+        }
+
+        int creatureID;
+        public int CreatureID
+        {
+            get { return creatureID; }
+            set { creatureID = value; }
         }
 
         Vector2 position;
@@ -103,6 +111,9 @@ namespace Anti_Social_Darwinism.Source
             position = new Vector2(x, y);
 
             rectangle = new Rectangle((int)(position.X), (int)(position.Y), texture.Width, texture.Height);
+
+            creatureID = creatureCount;
+            creatureCount += 1;
         }
 
         public void Update(GameTime gameTime)
@@ -173,11 +184,9 @@ namespace Anti_Social_Darwinism.Source
 
                 foreach (Creature creatureObject in creatureList)
                 {
-                    if (creature != creatureObject)
-                        movement.creatureCollision(creature, creatureObject);
+                    if (creature != creatureObject) movement.creatureCollision(creature, creatureObject);
                 }
             }
-
 
             int parentCounter = 0;
 
