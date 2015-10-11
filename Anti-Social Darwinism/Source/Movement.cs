@@ -83,6 +83,8 @@ namespace Anti_Social_Darwinism.Source
 
         public void creatureCollision(Creature creatureA, Creature creatureB)
         {
+            bool collisionX = false, collisionY = false;
+
             //top
             if ((creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y) &&
                 (creatureA.Rectangle.Y + creatureA.Texture.Height <= creatureB.Rectangle.Y + 25) &&
@@ -90,8 +92,15 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
                 if (creatureA.NetVelocityY > creatureB.NetVelocityY)
+                {
                     if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
                         creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
+
+                    collisionY = true;
+                }
+
+                if (creatureA.NetVelocityY == creatureB.NetVelocityY)
+                    collisionY = true;
             }
 
             //bottom
@@ -101,9 +110,20 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
             {
                 if (creatureA.NetVelocityY < creatureB.NetVelocityY)
+                {
                     if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
                         creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
+
+                    collisionY = true;
+                }
+
+                if (creatureA.NetVelocityY == creatureB.NetVelocityY)
+                    collisionY = true;
             }
+
+            if (collisionY == false)
+                if (creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
+                    creatureB.VelocityY.Remove("collision" + creatureA.CreatureID);
 
             //left
             if ((creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X) &&
@@ -112,8 +132,15 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
             {
                 if (creatureA.NetVelocityX > creatureB.NetVelocityX)
+                {
                     if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
                         creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
+
+                    collisionX = true;
+                }
+
+                if (creatureA.NetVelocityX == creatureB.NetVelocityX)
+                    collisionX = true;
             }
 
             //right
@@ -123,9 +150,20 @@ namespace Anti_Social_Darwinism.Source
                 (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
             {
                 if (creatureA.NetVelocityX < creatureB.NetVelocityX)
+                {
                     if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
                         creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
+
+                    collisionX = true;
+                }
+
+                if (creatureA.NetVelocityX == creatureB.NetVelocityX)
+                    collisionX = true;
             }
+
+            if (collisionX == false)
+                if (creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
+                    creatureB.VelocityX.Remove("collision" + creatureA.CreatureID);
         }
     }
 }
