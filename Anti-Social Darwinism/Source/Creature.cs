@@ -131,12 +131,13 @@ namespace Anti_Social_Darwinism.Source
                 if (Cursor.ReturnRectangle.Intersects(Rectangle))
                 {
                     if (Selected == false)
-                        DebugTools.createRectangle(new Rectangle(Rectangle.X - 5, Rectangle.Y - 5, Rectangle.Width + 10, Rectangle.Height + 10));
+                        DebugTools.createRectangle(CreatureID.ToString(), new Rectangle(Rectangle.X - 5, Rectangle.Y - 5, Rectangle.Width + 10, Rectangle.Height + 10));
 
                     Selected = true;
                 }
                 else
                 {
+                    DebugTools.removeRectangle(CreatureID.ToString());
                     Selected = false;
                 }
             }
@@ -194,14 +195,16 @@ namespace Anti_Social_Darwinism.Source
             {
                 if (creature.Selected == false)
                     tempSelectedCreatureList.Add(creature);
-
-                DebugTools.followParent(parentCounter, creature.Rectangle, 5);
-                parentCounter += 1;
-
-                if (rightClickDown == true && Cursor.ReturnMouseStateRight == false)
+                else
                 {
-                    movement.resetMovement(creature);
-                    creature.IsMoving = true;
+                    DebugTools.followParent(creature.CreatureID.ToString(), creature.Rectangle, 5);
+                    parentCounter += 1;
+
+                    if (rightClickDown == true && Cursor.ReturnMouseStateRight == false)
+                    {
+                        movement.resetMovement(creature);
+                        creature.IsMoving = true;
+                    }
                 }
             }
 

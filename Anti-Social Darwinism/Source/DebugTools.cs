@@ -13,41 +13,44 @@ namespace Anti_Social_Darwinism.Source
             set { graphics = value; }
         }
 
-        public static int listCounter = 0;
-        static List<Texture2D> textureList = new List<Texture2D>();
-        public static List<Rectangle> rectangleList = new List<Rectangle>();
+        public static Dictionary<string, Texture2D> textureList = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Rectangle> rectangleList = new Dictionary<string, Rectangle>();
 
-        public static void createRectangle(Rectangle rectangle)
+        public static void removeRectangle(string objectID)
         {
-            rectangleList.Add(rectangle);
-            textureList.Add(new Texture2D(graphics, rectangle.Width, rectangle.Height));
+            textureList.Remove(objectID);
+            rectangleList.Remove(objectID);
+        }
+
+        public static void createRectangle(string objectID, Rectangle rectangle)
+        {
+            rectangleList.Add(objectID, rectangle);
+            textureList.Add(objectID, new Texture2D(graphics, rectangle.Width, rectangle.Height));
 
             Color[] dataWidth = new Color[rectangle.Width];
             for (int i = 0; i < dataWidth.Length; ++i) dataWidth[i] = new Color(0, 0, 100, 255);
             Color[] dataHeight = new Color[rectangle.Height];
             for (int i = 0; i < dataHeight.Length; ++i) dataHeight[i] = new Color(0, 0, 100, 255);
 
-            textureList[listCounter].SetData(0, new Rectangle(0, 0, rectangle.Width, 1), dataWidth, 0, rectangle.Width);
-            textureList[listCounter].SetData(0, new Rectangle(0, rectangle.Height - 1, rectangle.Width, 1), dataWidth, 0, rectangle.Width);
-            textureList[listCounter].SetData(0, new Rectangle(0, 0, 1, rectangle.Height), dataHeight, 0, rectangle.Height);
-            textureList[listCounter].SetData(0, new Rectangle(rectangle.Width - 1, 0, 1, rectangle.Height), dataHeight, 0, rectangle.Height);
-
-            listCounter += 1;
+            textureList[objectID].SetData(0, new Rectangle(0, 0, rectangle.Width, 1), dataWidth, 0, rectangle.Width);
+            textureList[objectID].SetData(0, new Rectangle(0, rectangle.Height - 1, rectangle.Width, 1), dataWidth, 0, rectangle.Width);
+            textureList[objectID].SetData(0, new Rectangle(0, 0, 1, rectangle.Height), dataHeight, 0, rectangle.Height);
+            textureList[objectID].SetData(0, new Rectangle(rectangle.Width - 1, 0, 1, rectangle.Height), dataHeight, 0, rectangle.Height);
         }
 
-        public static void followParent(int x, Rectangle rectangleB, int offset)
+        public static void followParent(string objectID, Rectangle rectangleB, int offset)
         {
-            Rectangle rectangle = rectangleList[x];
+            Rectangle rectangle = rectangleList[objectID];
             rectangle.X = rectangleB.X - offset;
             rectangle.Y = rectangleB.Y - offset;
-            rectangleList[x] = rectangle;
+            rectangleList[objectID] = rectangle;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = 0; x < listCounter; x++)
+            foreach (KeyValuePair<string, Texture2D> dictionary in textureList)
             {
-                spriteBatch.Draw(textureList[x], rectangleList[x], Color.White);
+                spriteBatch.Draw(dictionary.Value, rectangleList[dictionary.Key], Color.White);
             }
         }
     }
