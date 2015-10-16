@@ -16,6 +16,7 @@ namespace Anti_Social_Darwinism.Source
         public void LoadContent(ContentManager content, GraphicsDevice graphics)
         {
             Tile.Content = content;
+            Tile.Graphics = graphics;
             Creature.Content = content;
             DebugTools.Graphics = graphics;
 

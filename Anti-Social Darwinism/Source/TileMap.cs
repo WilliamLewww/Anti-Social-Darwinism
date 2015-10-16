@@ -32,7 +32,21 @@ namespace Anti_Social_Darwinism.Source
 
     class Tile
     {
-        protected Texture2D texture;
+        protected static Texture2D texture;
+
+        private Texture2D tileTexture;
+        public Texture2D TileTexture
+        {
+            get { return tileTexture; }
+            protected set { tileTexture = value; }
+        }
+
+        private Color[] textureData;
+        public Color[] TextureData
+        {
+            get { return textureData; }
+            protected set { textureData = value; }
+        }
 
         private Rectangle rectangle;
         public Rectangle Rectangle
@@ -48,9 +62,16 @@ namespace Anti_Social_Darwinism.Source
             set { content = value; }
         }
 
+        private static GraphicsDevice graphics;
+        public static GraphicsDevice Graphics
+        {
+            protected get { return graphics; }
+            set { graphics = value; }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.White);
+            spriteBatch.Draw(tileTexture, rectangle, Color.White);
         }
     }
 
@@ -59,7 +80,28 @@ namespace Anti_Social_Darwinism.Source
         public CollisionTiles(int i, Rectangle newRectangle)
         {
             texture = Content.Load<Texture2D>("Sprites/tile");
-            this.Rectangle = newRectangle;
+            TextureData = new Color[32 * 32];
+            Rectangle = newRectangle;
+
+            texture.GetData(0, new Rectangle(0, 0, 32, 32), TextureData, 0, 1024);
+            TileTexture = new Texture2D(Graphics, 32, 32);
+            TileTexture.SetData(TextureData);
+        }
+
+        public void outlineTile(int side)
+        {
+            Color[] newTextureData = new Color[32];
+            for (int x = 0; x < 32; x++)
+                newTextureData[x] = new Color(0, 0, 0, 255);
+
+            if (side == 0)
+                TileTexture.SetData(0, new Rectangle(0, 0, 32, 1), newTextureData, 0, 32);
+            if (side == 1)
+                TileTexture.SetData(0, new Rectangle(0, 31, 32, 1), newTextureData, 0, 32);
+            if (side == 2)
+                TileTexture.SetData(0, new Rectangle(0, 0, 1, 32), newTextureData, 0, 32);
+            if (side == 3)
+                TileTexture.SetData(0, new Rectangle(31, 0, 1, 32), newTextureData, 0, 32);
         }
     }
 }

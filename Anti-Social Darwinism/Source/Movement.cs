@@ -85,80 +85,94 @@ namespace Anti_Social_Darwinism.Source
         {
             bool collisionX = false, collisionY = false;
 
-            //top
-            if ((creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y) &&
-                (creatureA.Rectangle.Y + creatureA.Texture.Height <= creatureB.Rectangle.Y + 25) &&
-                (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
-                (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
+            if (creatureA.NetVelocityY != 0 && creatureB.NetVelocityY != 0)
             {
-                if (creatureA.NetVelocityY > creatureB.NetVelocityY)
-                {
-                    if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
-                        creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
 
-                    collisionY = true;
-                }
-
-                if (creatureA.NetVelocityY == creatureB.NetVelocityY)
-                    collisionY = true;
             }
-
-            //bottom
-            if ((creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height) &&
-                (creatureA.Rectangle.Y >= creatureB.Rectangle.Y + creatureB.Texture.Height - 25) &&
-                (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
-                (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
+            else
             {
-                if (creatureA.NetVelocityY < creatureB.NetVelocityY)
+                //top
+                if ((creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y) &&
+                    (creatureA.Rectangle.Y + creatureA.Texture.Height <= creatureB.Rectangle.Y + 25) &&
+                    (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
+                    (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
                 {
-                    if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
-                        creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
+                    if (creatureA.NetVelocityY > creatureB.NetVelocityY)
+                    {
+                        if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
+                            creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
 
-                    collisionY = true;
+                        collisionY = true;
+                    }
+
+                    if (creatureA.NetVelocityY == creatureB.NetVelocityY)
+                        collisionY = true;
                 }
 
-                if (creatureA.NetVelocityY == creatureB.NetVelocityY)
-                    collisionY = true;
+                //bottom
+                if ((creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height) &&
+                    (creatureA.Rectangle.Y >= creatureB.Rectangle.Y + creatureB.Texture.Height - 25) &&
+                    (creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X + 4) &&
+                    (creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width - 4))
+                {
+                    if (creatureA.NetVelocityY < creatureB.NetVelocityY)
+                    {
+                        if (!creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
+                            creatureB.VelocityY.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityY);
+
+                        collisionY = true;
+                    }
+
+                    if (creatureA.NetVelocityY == creatureB.NetVelocityY)
+                        collisionY = true;
+                }
             }
 
             if (collisionY == false)
                 if (creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
                     creatureB.VelocityY.Remove("collision" + creatureA.CreatureID);
 
-            //left
-            if ((creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X) &&
-                (creatureA.Rectangle.X + creatureA.Texture.Width <= creatureB.Rectangle.X + 25) &&
-                (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
-                (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
+            if (creatureA.NetVelocityX != 0 && creatureB.NetVelocityX != 0)
             {
-                if (creatureA.NetVelocityX > creatureB.NetVelocityX)
-                {
-                    if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
-                        creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
 
-                    collisionX = true;
-                }
-
-                if (creatureA.NetVelocityX == creatureB.NetVelocityX)
-                    collisionX = true;
             }
-
-            //right
-            if ((creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width) &&
-                (creatureA.Rectangle.X >= creatureB.Rectangle.X + creatureB.Texture.Width - 25) &&
-                (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
-                (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
+            else
             {
-                if (creatureA.NetVelocityX < creatureB.NetVelocityX)
+                //left
+                if ((creatureA.Rectangle.X + creatureA.Texture.Width >= creatureB.Rectangle.X) &&
+                    (creatureA.Rectangle.X + creatureA.Texture.Width <= creatureB.Rectangle.X + 25) &&
+                    (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
+                    (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
                 {
-                    if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
-                        creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
+                    if (creatureA.NetVelocityX > creatureB.NetVelocityX)
+                    {
+                        if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
+                            creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
 
-                    collisionX = true;
+                        collisionX = true;
+                    }
+
+                    if (creatureA.NetVelocityX == creatureB.NetVelocityX)
+                        collisionX = true;
                 }
 
-                if (creatureA.NetVelocityX == creatureB.NetVelocityX)
-                    collisionX = true;
+                //right
+                if ((creatureA.Rectangle.X <= creatureB.Rectangle.X + creatureB.Texture.Width) &&
+                    (creatureA.Rectangle.X >= creatureB.Rectangle.X + creatureB.Texture.Width - 25) &&
+                    (creatureA.Rectangle.Y + creatureA.Texture.Height >= creatureB.Rectangle.Y + 4) &&
+                    (creatureA.Rectangle.Y <= creatureB.Rectangle.Y + creatureB.Texture.Height - 4))
+                {
+                    if (creatureA.NetVelocityX < creatureB.NetVelocityX)
+                    {
+                        if (!creatureB.VelocityX.ContainsKey("collision" + creatureA.CreatureID))
+                            creatureB.VelocityX.Add("collision" + creatureA.CreatureID, creatureA.NetVelocityX);
+
+                        collisionX = true;
+                    }
+
+                    if (creatureA.NetVelocityX == creatureB.NetVelocityX)
+                        collisionX = true;
+                }
             }
 
             if (collisionX == false)
