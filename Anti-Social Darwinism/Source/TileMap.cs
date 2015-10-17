@@ -11,6 +11,8 @@ namespace Anti_Social_Darwinism.Source
 
         public void Generate(int[,] map, int size)
         {
+            int increment = 0;
+
             for (int x = 0; x < map.GetLength(1); x++)
                 for (int y = 0; y < map.GetLength(0); y++)
                 {
@@ -18,7 +20,86 @@ namespace Anti_Social_Darwinism.Source
 
                     if (number > 0)
                     {
-                        collisionTiles.Add(new CollisionTiles(number, new Rectangle(x * size, y * size, size, size)));
+                        if (number == 1)
+                        {
+                            collisionTiles.Add(new CollisionTiles(number, new Rectangle(x * size, y * size, size, size)));
+
+                            if (y != 0 && y != map.GetLength(0) - 1 && x != 0 && x != map.GetLength(1) - 1)
+                            {
+                                if (map[y - 1, x] != 1)
+                                    collisionTiles[increment].outlineTile(0);
+                                if (map[y + 1, x] != 1)
+                                    collisionTiles[increment].outlineTile(1);
+                                if (map[y, x - 1] != 1)
+                                    collisionTiles[increment].outlineTile(2);
+                                if (map[y, x + 1] != 1)
+                                    collisionTiles[increment].outlineTile(3);
+                            }
+
+                            if (y == 0)
+                            {
+                                collisionTiles[increment].outlineTile(0);
+
+                                if (map[y + 1, x] != 1)
+                                    collisionTiles[increment].outlineTile(1);
+                                if (x != 0 && x != map.GetLength(1) - 1)
+                                {
+                                    if (map[y, x - 1] != 1)
+                                        collisionTiles[increment].outlineTile(2);
+                                    if (map[y, x + 1] != 1)
+                                        collisionTiles[increment].outlineTile(3);
+                                }
+                            }
+                            if (y == map.GetLength(0) - 1)
+                            {
+                                collisionTiles[increment].outlineTile(1);
+
+                                if (map[y - 1, x] != 1)
+                                    collisionTiles[increment].outlineTile(0);
+                                if (x != 0 && x != map.GetLength(1) - 1)
+                                {
+                                    if (map[y, x - 1] != 1)
+                                        collisionTiles[increment].outlineTile(2);
+                                    if (map[y, x + 1] != 1)
+                                        collisionTiles[increment].outlineTile(3);
+                                }
+                            }
+                            if (x == 0)
+                            {
+                                collisionTiles[increment].outlineTile(2);
+
+                                if (map[y, x + 1] != 1)
+                                    collisionTiles[increment].outlineTile(3);
+                                if (y != 0 && y != map.GetLength(0) - 1)
+                                {
+                                    if (map[y - 1, x] != 1)
+                                        collisionTiles[increment].outlineTile(0);
+                                    if (map[y + 1, x] != 1)
+                                        collisionTiles[increment].outlineTile(1);
+                                }
+                            }
+                            if (x == map.GetLength(1) - 1)
+                            {
+                                collisionTiles[increment].outlineTile(3);
+
+                                if (map[y, x - 1] != 1)
+                                    collisionTiles[increment].outlineTile(2);
+                                if (y != 0 && y != map.GetLength(0) - 1)
+                                {
+                                    if (map[y - 1, x] != 1)
+                                        collisionTiles[increment].outlineTile(0);
+                                    if (map[y + 1, x] != 1)
+                                        collisionTiles[increment].outlineTile(1);
+                                }
+                            }
+
+                            increment += 1;
+                        }
+                        else
+                        {
+                            collisionTiles.Add(new CollisionTiles(number, new Rectangle(x * size, y * size, size, size)));
+                            increment += 1;
+                        }
                     }
                 }
         }
@@ -90,18 +171,18 @@ namespace Anti_Social_Darwinism.Source
 
         public void outlineTile(int side)
         {
-            Color[] newTextureData = new Color[32];
-            for (int x = 0; x < 32; x++)
+            Color[] newTextureData = new Color[64];
+            for (int x = 0; x < 64; x++)
                 newTextureData[x] = new Color(0, 0, 0, 255);
 
             if (side == 0)
-                TileTexture.SetData(0, new Rectangle(0, 0, 32, 1), newTextureData, 0, 32);
+                TileTexture.SetData(0, new Rectangle(0, 0, 32, 2), newTextureData, 0, 32);
             if (side == 1)
-                TileTexture.SetData(0, new Rectangle(0, 31, 32, 1), newTextureData, 0, 32);
+                TileTexture.SetData(0, new Rectangle(0, 30, 32, 2), newTextureData, 0, 32);
             if (side == 2)
-                TileTexture.SetData(0, new Rectangle(0, 0, 1, 32), newTextureData, 0, 32);
+                TileTexture.SetData(0, new Rectangle(0, 0, 2, 32), newTextureData, 0, 32);
             if (side == 3)
-                TileTexture.SetData(0, new Rectangle(31, 0, 1, 32), newTextureData, 0, 32);
+                TileTexture.SetData(0, new Rectangle(30, 0, 2, 32), newTextureData, 0, 32);
         }
     }
 }
