@@ -180,19 +180,26 @@ namespace Anti_Social_Darwinism.Source
                     if (!selectedCreatureList.Contains(creature))
                         selectedCreatureList.Add(creature);
 
-                if (creature.IsMoving == true)
-                    movement.moveCreature(creature, Cursor.mousePosition);
-
                 foreach (Creature creatureObject in creatureList)
                 {
                     if (creature != creatureObject) movement.creatureCollision(creature, creatureObject);
                 }
             }
 
-            int parentCounter = 0;
-
+            int parentCounter = 0, childCounter = 0, yOffsetCounter = 0, yOffset = 0, numberPerRow = 9;
             foreach (Creature creature in selectedCreatureList)
             {
+                if (creature.IsMoving == true)
+                {
+                    if (yOffsetCounter / numberPerRow >= 1)
+                    {
+                        yOffset += 1;
+                        yOffsetCounter = 0;
+                    }
+
+                    movement.moveCreature(creature, Cursor.mousePosition - new Vector2((childCounter - numberPerRow / 2) - (yOffset * numberPerRow) * 64, yOffset * 64));
+                }
+
                 if (creature.Selected == false)
                     tempSelectedCreatureList.Add(creature);
                 else
@@ -206,6 +213,9 @@ namespace Anti_Social_Darwinism.Source
                         creature.IsMoving = true;
                     }
                 }
+
+                childCounter += 1;
+                yOffsetCounter += 1;
             }
 
             foreach (Creature creature in tempSelectedCreatureList)

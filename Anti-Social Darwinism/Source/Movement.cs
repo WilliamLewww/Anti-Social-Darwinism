@@ -85,7 +85,7 @@ namespace Anti_Social_Darwinism.Source
         {
             bool collisionX = false, collisionY = false;
 
-            if (creatureA.NetVelocityY != 0 && creatureB.NetVelocityY != 0 && creatureA.NetVelocityY != creatureB.NetVelocityY)
+            if (creatureA.NetVelocityY != 0 || creatureB.NetVelocityY != 0 && creatureA.NetVelocityY != creatureB.NetVelocityY)
             {
 
             }
@@ -132,7 +132,7 @@ namespace Anti_Social_Darwinism.Source
                 if (creatureB.VelocityY.ContainsKey("collision" + creatureA.CreatureID))
                     creatureB.VelocityY.Remove("collision" + creatureA.CreatureID);
 
-            if (creatureA.NetVelocityX != 0 && creatureB.NetVelocityX != 0 && creatureA.NetVelocityX != creatureB.NetVelocityX)
+            if (creatureA.NetVelocityX != 0 || creatureB.NetVelocityX != 0 && creatureA.NetVelocityX != creatureB.NetVelocityX)
             {
 
             }
