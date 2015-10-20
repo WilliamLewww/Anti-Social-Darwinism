@@ -197,7 +197,10 @@ namespace Anti_Social_Darwinism.Source
                         yOffsetCounter = 0;
                     }
 
-                    movement.moveCreature(creature, Cursor.mousePosition - new Vector2(((childCounter - numberPerRow / 2) - (yOffset * numberPerRow)) * 64, (yOffset * 64) - ((selectedCreatureList.Count / numberPerRow) / 2) * 64));
+                    if (selectedCreatureList.Count < numberPerRow)
+                        movement.moveCreature(creature, Cursor.mousePosition - new Vector2((childCounter * 64) - ((selectedCreatureList.Count / 2) * 64), 0));
+                    else
+                        movement.moveCreature(creature, Cursor.mousePosition - new Vector2(((childCounter - numberPerRow / 2) - (yOffset * numberPerRow)) * 64, (yOffset * 64) - ((selectedCreatureList.Count / numberPerRow) / 2) * 64));
                 }
 
                 if (creature.Selected == false)
