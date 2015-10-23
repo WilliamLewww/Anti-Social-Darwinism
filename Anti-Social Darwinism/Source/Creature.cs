@@ -176,14 +176,13 @@ namespace Anti_Social_Darwinism.Source
 
             foreach (Creature creature in creatureList)
             {
+                foreach (Creature creatureTemp in creatureList)
+                    if (creature != creatureTemp)
+                        movement.unstackCreature(creature, creatureTemp, .5f);
+
                 if (creature.Selected == true)
                     if (!selectedCreatureList.Contains(creature))
                         selectedCreatureList.Add(creature);
-
-                foreach (Creature creatureObject in creatureList)
-                {
-                    if (creature != creatureObject) movement.creatureCollision(creature, creatureObject);
-                }
             }
 
             int parentCounter = 0, childCounter = 0, yOffsetCounter = 0, yOffset = 0, numberPerRow = 9;

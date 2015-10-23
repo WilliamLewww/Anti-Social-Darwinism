@@ -81,6 +81,53 @@ namespace Anti_Social_Darwinism.Source
             return null;
         }
 
+        public void unstackCreature(Creature creatureA, Creature creatureB, float speed)
+        {
+            if (creatureA.Rectangle.Intersects(creatureB.Rectangle))
+            {
+                if (creatureA.Position.X >= creatureB.Position.X)
+                {
+                    if (!creatureA.VelocityX.ContainsKey("stack" + creatureB.CreatureID))
+                        creatureA.VelocityX.Add("stack" + creatureB.CreatureID, speed);
+
+                    if (!creatureB.VelocityX.ContainsKey("stack" + creatureA.CreatureID))
+                        creatureB.VelocityX.Add("stack" + creatureA.CreatureID, -speed);
+                }
+                else
+                {
+                    if (!creatureA.VelocityX.ContainsKey("stack" + creatureB.CreatureID))
+                        creatureA.VelocityX.Add("stack" + creatureB.CreatureID, -speed);
+
+                    if (!creatureB.VelocityX.ContainsKey("stack" + creatureA.CreatureID))
+                        creatureB.VelocityX.Add("stack" + creatureA.CreatureID, speed);
+                }
+
+                if (creatureA.Position.Y >= creatureB.Position.Y)
+                {
+                    if (!creatureA.VelocityY.ContainsKey("stack" + creatureB.CreatureID))
+                        creatureA.VelocityY.Add("stack" + creatureB.CreatureID, speed);
+
+                    if (!creatureB.VelocityY.ContainsKey("stack" + creatureA.CreatureID))
+                        creatureB.VelocityY.Add("stack" + creatureA.CreatureID, -speed);
+                }
+                else
+                {
+                    if (!creatureA.VelocityY.ContainsKey("stack" + creatureB.CreatureID))
+                        creatureA.VelocityY.Add("stack" + creatureB.CreatureID, -speed);
+
+                    if (!creatureB.VelocityY.ContainsKey("stack" + creatureA.CreatureID))
+                        creatureB.VelocityY.Add("stack" + creatureA.CreatureID, speed);
+                }
+            }
+            else
+            {
+                if (creatureA.VelocityX.ContainsKey("stack" + creatureB.CreatureID)) creatureA.VelocityX.Remove("stack" + creatureB.CreatureID);
+                if (creatureA.VelocityY.ContainsKey("stack" + creatureB.CreatureID)) creatureA.VelocityY.Remove("stack" + creatureB.CreatureID);
+                if (creatureB.VelocityX.ContainsKey("stack" + creatureA.CreatureID)) creatureB.VelocityX.Remove("stack" + creatureA.CreatureID);
+                if (creatureB.VelocityY.ContainsKey("stack" + creatureA.CreatureID)) creatureB.VelocityY.Remove("stack" + creatureA.CreatureID);
+            }
+        }
+
         public void creatureCollision(Creature creatureA, Creature creatureB)
         {
             bool collisionX = false, collisionY = false;
