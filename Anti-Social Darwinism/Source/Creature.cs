@@ -178,7 +178,7 @@ namespace Anti_Social_Darwinism.Source
             {
                 foreach (Creature creatureTemp in creatureList)
                     if (creature != creatureTemp)
-                        movement.unstackCreature(creature, creatureTemp, .5f);
+                        movement.unstackCreature(creature, creatureTemp, 1f);
 
                 if (creature.Selected == true)
                     if (!selectedCreatureList.Contains(creature))
